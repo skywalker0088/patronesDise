@@ -1,0 +1,13 @@
+<?php
+
+namespace App\Services\PatronEstructural\Decorator\ProblemOne;
+
+class ConLeche extends BebidaDecorator {
+    public function getDescripcion(): string {
+        return $this->bebida->getDescripcion() . " con leche";
+    }
+
+    public function getCosto(): float {
+        return $this->bebida->getCosto() + 1.00;
+    }
+}
