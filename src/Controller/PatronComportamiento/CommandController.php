@@ -12,6 +12,10 @@ use App\Services\PatronComportamiento\Command\ProblemOne\RemoteControl;
 use App\Services\PatronComportamiento\Command\ProblemOne\TV;
 use App\Services\PatronComportamiento\Command\ProblemOne\TVOffCommand;
 use App\Services\PatronComportamiento\Command\ProblemOne\TVOnCommand;
+use App\Services\PatronComportamiento\Command\ProblemTwo\AddTextCommand;
+use App\Services\PatronComportamiento\Command\ProblemTwo\DeleteTextCommand;
+use App\Services\PatronComportamiento\Command\ProblemTwo\EditorInvoker;
+use App\Services\PatronComportamiento\Command\ProblemTwo\TextEditor;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -31,27 +35,23 @@ final class CommandController extends AbstractController
     public function index(): Response
     {
         $return = [];
-        $remote = new RemoteControl();
+        $editor = new TextEditor();
+        $invoker = new EditorInvoker();
 
-        $livingRoomLight = new Light("Living Room");
-        $tv = new TV("Bedroom");
-        $garageDoor = new GarageDoor();
+        $invoker->executeCommand(new AddTextCommand($editor, "Hola "));
+        $invoker->executeCommand(new AddTextCommand($editor, "mundo"));
+        $invoker->executeCommand(new DeleteTextCommand($editor, 5));
 
-        // Asignamos comandos a los botones
-        $remote->setCommand(0, new LightOnCommand($livingRoomLight), new LightOffCommand($livingRoomLight));
-        $remote->setCommand(1, new TVOnCommand($tv), new TVOffCommand($tv));
-        $remote->setCommand(2, new GarageDoorOpenCommand($garageDoor), new GarageDoorCloseCommand($garageDoor));
+        $return[] = "Contenido actual: " . $editor->getContent() . "\n"; // "Hola "
 
-        // Simulamos el uso
-        $return[] = $remote->pressOnButton(0);   // Enciende la luz
-        $return[] = $remote->pressOffButton(0);  // Apaga la luz
-        $return[] = $remote->pressUndo();        // Deshace la acción (enciende la luz)
+        $invoker->undo(); // Revierte el delete: vuelve a "Hola mundo"
+        $return[] = "Después de undo 1: " . $editor->getContent() . "\n";
 
-        $return[] = $remote->pressOnButton(1);   // Enciende la TV
-        $return[] = $remote->pressOffButton(1);  // Apaga la TV
+        $invoker->undo(); // Revierte el "mundo"
+        $return[] = "Después de undo 2: " . $editor->getContent() . "\n";
 
-        $return[] = $remote->pressOnButton(2);   // Abre la puerta del garage
-        $return[] = $remote->pressUndo();        // Deshace (cierra la puerta)
+        $invoker->undo(); // Revierte el "Hola "
+        $return[] = "Después de undo 3: " . $editor->getContent() . "\n";
 
         return $this->render('command_method/index.html.twig', [
             'controller_name' => 'CommandController',
