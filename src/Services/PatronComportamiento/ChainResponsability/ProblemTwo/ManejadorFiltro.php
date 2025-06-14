@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\PatronComportamiento\ProblemTwo;
+namespace App\Services\PatronComportamiento\ChainResponsability\ProblemTwo;
 
 abstract class ManejadorFiltro {
     protected ?ManejadorFiltro $siguiente = null;

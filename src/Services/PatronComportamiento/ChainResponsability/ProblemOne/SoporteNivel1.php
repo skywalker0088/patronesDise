@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\PatronComportamiento\ProblemOne;
+namespace App\Services\PatronComportamiento\ChainResponsability\ProblemOne;
 
 class SoporteNivel1 extends ManejadorSoporte
 {

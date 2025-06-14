@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\PatronComportamiento\ProblemTwo;
+namespace App\Services\PatronComportamiento\ChainResponsability\ProblemTwo;
 
 class FiltrarSpam extends ManejadorFiltro
 {

@@ -2,12 +2,12 @@
 
 namespace App\Controller\PatronComportamiento;
 
-use App\Services\PatronComportamiento\ProblemOne\SoporteNivel1;
-use App\Services\PatronComportamiento\ProblemOne\SoporteNivel2;
-use App\Services\PatronComportamiento\ProblemOne\SoporteNivel3;
-use App\Services\PatronComportamiento\ProblemTwo\FiltrarLenguaje;
-use App\Services\PatronComportamiento\ProblemTwo\FiltrarLongitud;
-use App\Services\PatronComportamiento\ProblemTwo\FiltrarSpam;
+use App\Services\PatronComportamiento\ChainResponsability\ProblemOne\SoporteNivel1;
+use App\Services\PatronComportamiento\ProblemOne\ChainResponsability\SoporteNivel2;
+use App\Services\PatronComportamiento\ProblemOne\ChainResponsability\SoporteNivel3;
+use App\Services\PatronComportamiento\ProblemTwo\ChainResponsability\FiltrarLenguaje;
+use App\Services\PatronComportamiento\ProblemTwo\ChainResponsability\FiltrarLongitud;
+use App\Services\PatronComportamiento\ProblemTwo\ChainResponsability\FiltrarSpam;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
